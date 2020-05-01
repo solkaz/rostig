@@ -4,64 +4,6 @@ body {
   width: 100vw;
 }
 
-.container {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.game-container {
-  flex: 10 1 auto;
-  width: 80%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.display-container {
-  flex: 1 0 50%;
-  border: 5px solid black;
-}
-
-.buttons-container {
-  flex: 1 0 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.upper-buttons-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.direction-button-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  height: 24px;
-}
-
-.lower-buttons-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 .footer {
   flex: 1 1 auto;
-}
-
-.action-button {
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-}
-
-.menu-button {
-  border-radius: 25%;
-  width: 32px;
-  height: 8px;
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,58 +7,54 @@ import { Component } from '@angular/core';
       <div class="game-container">
         <div class="display-container">
           <!-- TODO: Add display -->
-          <div class="screen">
-            Loading
+          <div class="screen" *ngIf="loadedGame; else upload">
+            <app-game-screen></app-game-screen>
           </div>
+          <ng-template #upload>
+            <app-game-loader (gameLoad)="loadedGame = true"></app-game-loader>
+          </ng-template>
         </div>
 
-        <div class="buttons-container">
-          <div class="upper-buttons-container">
-            <div style="border: 1px black solid;">
-              <div class="direction-button-row">
-                <button type="button" id="up"></button>
-              </div>
-              <div class="direction-button-row">
-                <button type="button" id="left"></button>
-                <button type="button" id="middle"></button>
-                <button type="button" id="right"></button>
-              </div>
-              <div class="direction-button-row">
-                <button type="button" id="down"></button>
-              </div>
-            </div>
-            <div>
-              <div class="action-button-container">
-                <button type="button" class="action-button" id="b"></button>
-                <label for="b">B</label>
-              </div>
-              <div class="action-button-container">
-                <button type="button" class="action-button" id="a"></button>
-                <label for="a">A</label>
-              </div>
-            </div>
-          </div>
-          <div class="lower-buttons-container">
-            <div class="menu-button-container">
-              <button type="button" class="menu-button" id="select"></button>
-              <br />
-              <label for="select">Select</label>
-            </div>
-            <div class="menu-button-container">
-              <button type="button" class="menu-button" id="start"></button>
-              <br />
-              <label for="start">Start</label>
-            </div>
-          </div>
-        </div>
+        <app-buttons class="buttons-container"></app-buttons>
       </div>
       <div class="footer">
         <p>Not endorsed by Nintendo</p>
       </div>
     </div>
   `,
-  styles: [],
+  styles: [
+    `
+      .container {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .game-container {
+        flex: 10 1 auto;
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .display-container {
+        flex: 1 0 50%;
+        border: 5px solid black;
+      }
+
+      .buttons-container {
+        flex: 1 0 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+    `,
+  ],
 })
-export class AppComponent {
-  title = 'ng-gameboy-emulator';
+export class AppComponent implements OnInit {
+  loadedGame = false;
+
+  ngOnInit() {}
 }
