@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
     <div class="container">
       <div class="game-container">
         <div class="display-container">
-          <!-- TODO: Add display -->
           <div class="screen" *ngIf="loadedGame; else upload">
             <app-game-screen></app-game-screen>
           </div>

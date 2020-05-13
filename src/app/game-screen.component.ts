@@ -3,7 +3,7 @@ import { WasmService } from './wasm.service';
 
 @Component({
   selector: 'app-game-screen',
-  template: ` <canvas id="canvas" width="160" height="144"></canvas> `,
+  template: ` <canvas id="screen-canvas" width="160" height="144"></canvas> `,
   styles: [
     `
       :host {

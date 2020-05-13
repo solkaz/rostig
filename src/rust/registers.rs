@@ -6,6 +6,12 @@ const FLAG_NEGATIVE: u8 = 1 << 6;
 const FLAG_HALF_CARRY: u8 = 1 << 5;
 const FLAG_CARRY: u8 = 1 << 4;
 
+macro_rules! log {
+    ( $( $t:tt )* ) => {
+        web_sys::console::log_1(&format!( $( $t )* ).into());
+    }
+}
+
 #[derive(Debug)]
 pub struct Registers {
   pub a: u8,
@@ -18,31 +24,6 @@ pub struct Registers {
   pub l: u8,
   pub sp: u16,
   pub pc: u16,
-}
-
-pub enum Register {
-  A,
-  F,
-  B,
-  C,
-  D,
-  E,
-  H,
-  L,
-}
-
-pub enum CombinationRegister {
-  // Combination registers
-  Af,
-  Bc,
-  De,
-  Hl,
-  Pc,
-  Sp,
-}
-
-fn combine_u8s(a: &u8, b: &u8) -> u16 {
-  return u16::from_le_bytes([*a, *b]);
 }
 
 impl Default for Registers {
@@ -63,49 +44,40 @@ impl Default for Registers {
 }
 
 impl Registers {
-  pub fn get_register(&self, register: Register) -> &u8 {
-    match register {
-      Register::A => &self.a,
-      Register::F => &self.f,
-      Register::B => &self.b,
-      Register::C => &self.c,
-      Register::D => &self.d,
-      Register::E => &self.e,
-      Register::H => &self.h,
-      Register::L => &self.l,
-    }
+  pub fn get_af(&self) -> u16 {
+    return (self.a as u16) << 8 | self.f as u16;
   }
 
-  pub fn set_register(&mut self, register: Register, value: u8) {
-    match register {
-      Register::A => self.a = value,
-      Register::F => self.f = value,
-      Register::B => self.b = value,
-      Register::C => self.c = value,
-      Register::D => self.d = value,
-      Register::E => self.e = value,
-      Register::H => self.h = value,
-      Register::L => self.l = value,
-    }
+  pub fn set_af(&mut self, val: u16) {
+    self.a = ((val & 0xFF00) >> 8) as u8;
+    self.f = (val & 0xFF) as u8;
   }
 
-  pub fn get_double_register(&self, register: CombinationRegister) -> u16 {
-    match register {
-      CombinationRegister::Af => combine_u8s(&self.a, &self.f),
-      CombinationRegister::Bc => combine_u8s(&self.b, &self.c),
-      CombinationRegister::De => combine_u8s(&self.d, &self.e),
-      CombinationRegister::Hl => combine_u8s(&self.h, &self.l),
-      CombinationRegister::Pc => self.pc,
-      CombinationRegister::Sp => self.sp,
-    }
+  pub fn get_bc(&self) -> u16 {
+    return (self.b as u16) << 8 | self.c as u16;
   }
 
-  pub fn set_double_register(&mut self, register: CombinationRegister, value: u16) {
-    match register {
-      CombinationRegister::Pc => self.pc = value,
-      CombinationRegister::Sp => self.sp = value,
-      _ => (),
-    }
+  pub fn set_bc(&mut self, val: u16) {
+    self.b = ((val & 0xFF00) >> 8) as u8;
+    self.c = (val & 0xFF) as u8;
+  }
+
+  pub fn get_de(&self) -> u16 {
+    return (self.d as u16) << 8 | self.e as u16;
+  }
+
+  pub fn set_de(&mut self, val: u16) {
+    self.d = ((val & 0xFF00) >> 8) as u8;
+    self.e = (val & 0xFF) as u8;
+  }
+
+  pub fn get_hl(&self) -> u16 {
+    return (self.h as u16) << 8 | self.l as u16;
+  }
+
+  pub fn set_hl(&mut self, val: u16) {
+    self.h = ((val & 0xFF00) >> 8) as u8;
+    self.l = (val & 0xFF) as u8;
   }
 
   pub fn reset(&mut self) {
@@ -122,8 +94,8 @@ impl Registers {
   }
 
   pub fn next_command(&mut self) -> u16 {
-    let instruction: u16 = self.get_double_register(CombinationRegister::Pc);
-    self.set_double_register(CombinationRegister::Pc, instruction + 1);
+    let instruction: u16 = self.pc;
+    self.pc += 1;
     return instruction;
   }
 
@@ -176,3 +148,16 @@ impl Registers {
     }
   }
 }
+
+pub const REGISTERS: Registers = Registers {
+  a: 0x01,
+  f: 0xb0,
+  b: 0x00,
+  c: 0x13,
+  d: 0x00,
+  e: 0xd8,
+  h: 0x01,
+  l: 0x4d,
+  sp: 0xfffe,
+  pc: 0x100,
+};
