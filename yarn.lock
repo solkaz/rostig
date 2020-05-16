@@ -1007,6 +1007,16 @@
     merge-source-map "^1.1.0"
     schema-utils "^2.6.4"
 
+"@ngneat/hotkeys@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@ngneat/hotkeys/-/hotkeys-1.0.1.tgz#28fc510a4fed6e6bc2c3127ce56c09699983d378"
+  integrity sha512-AbyomKaQGX3NJ+GaG1hDwtwvdRarLxmcE7nUYc9FDdXGg+clemhn9IP1G9duxwdGLLn85mBdEw5lpPpjG5tmaQ==
+
+"@ngneat/until-destroy@^7.1.6":
+  version "7.1.6"
+  resolved "https://registry.yarnpkg.com/@ngneat/until-destroy/-/until-destroy-7.1.6.tgz#e38fb56565588af68fd8612b6c5e47e774b5e1c1"
+  integrity sha512-sJDdoz5IEwv1pk4/ystOgPDHX0dK/EIda2yDXQe8DQzE/az88gElNLbGHbjMLUuo6cQgep5LA6Ecl/L6ltIlig==
+
 "@ngtools/webpack@9.1.4":
   version "9.1.4"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-9.1.4.tgz#8866d8461969662d0860d857aafa5a706877f85d"

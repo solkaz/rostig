@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-
+import { HotkeysModule } from '@ngneat/hotkeys';
 import { AppComponent } from './app.component';
 import { ButtonsComponent } from './buttons.component';
 import { GameLoaderComponent } from './game-loader.component';
@@ -18,7 +18,7 @@ function loadWasmFactory(wasmService: WasmService) {
     GameLoaderComponent,
     GameScreenComponent,
   ],
-  imports: [BrowserModule],
+  imports: [BrowserModule, HotkeysModule],
   providers: [
     {
       provide: APP_INITIALIZER,
